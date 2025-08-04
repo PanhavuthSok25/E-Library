@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        iframe {
+            width: 80%;
+            height: 80vh;
+            border: 1px solid #ccc;
+    
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <iframe id="pdfViewer" src="" frameborder="0"></iframe>
+    <button id="downloadBtn">Download PDF</button>
+
+    <script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+
+        const pdfFile = getQueryParam("file");
+        const iframe = document.getElementById("pdfViewer");
+        const downloadBtn = document.getElementById("downloadBtn");
+
+        console.log("PDF File:", pdfFile);
+
+        if (pdfFile) {
+            iframe.src = pdfFile;
+            downloadBtn.onclick = function () {
+                window.open(pdfFile, "_blank");
+
+            
+            };
+        } else {
+            document.body.innerHTML = "<h2>No PDF file specified.</h2>";
+        }
+    </script>
+
+</body>
+</html>

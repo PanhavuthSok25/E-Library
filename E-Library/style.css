@@ -1,0 +1,264 @@
+/* styles.css */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+header {
+  background: #2cc8b6;
+  color: #e38e3f;
+  width: 100%;
+  padding: 5px 0;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.header-container {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  
+  margin-left: 10px;
+  vertical-align: middle;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.logo img {
+  width: 70px;
+  height: auto;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+nav {
+  margin-top: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  margin: 0 15px;
+  padding: 8px 16px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  border-color: #333;
+  background-color: #e0e0e0;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin: 0 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+}
+
+.top-nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.top-nav a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  transition: all 0.3s ease;
+}
+
+.top-nav a:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.table-contain {
+  width: 80%;
+  margin-top: 20%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+input {
+  margin: 6px;
+  padding: 8px;
+  width: 157px;
+  max-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+table {
+  padding: 10px 5px;
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+  background: rgb(255, 255, 255);
+  margin-top: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+th {
+  background: #62c8bc;
+  color: #e38e3f;
+}
+
+tbody tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+a {
+  color: #e38e3f;
+  text-decoration: underline;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #2cc8b6;
+  color: white;
+  margin-top: 20px;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
+
+/* Make the second search box wider */
+#searchBox2 {
+  width: 50px; /* Adjust this value as needed */
+  height: 150px;
+}
+
+.pagination {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 90%;
+  padding: 10px 0;
+  scrollbar-width: thin;
+  justify-content: center;
+  margin: 20px;
+}
+
+.pagination a {
+  display: inline-block;
+  min-width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  margin: 0 5px;
+  border-radius: 50%;
+  text-decoration: none;
+  background-color: #f0f0f0;
+  color: black;
+  font-weight: bold;
+  border: 2px solid #ccc;
+  width: 40px;
+}
+
+.pagination a.active {
+  background-color: #007bff;
+  color: white;
+  border: 2px solid #0056b3;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
+}
+
+.pagination a.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.pagination::-webkit-scrollbar {
+  height: 6px;
+}
+
+.pagination::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+main .pagination {
+  margin-bottom: 20px;
+}
+
+.document-list ol {
+  list-style: none;
+  padding: 0;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  max-width: 1000px;
+}
+
+.document-list ol li {
+  background-color: #2cc8b6;
+  color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.document-list ol li:hover {
+  background-color: #1ba99b;
+  transform: translateY(-2px);
+}
+
+label {
+  display: block;
+  font:
+    1rem "Fira Sans",
+    sans-serif;
+}
+
+input,
+label {
+  margin: 0.4rem 0;
+}
