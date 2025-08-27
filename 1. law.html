@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <title>ច្បាប់ - E-Library</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Upload box above search (clean, no cyan) */
+    .upload-section {
+      margin: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-size: 14px;
+    }
+    .upload-section input,
+    .upload-section select,
+    .upload-section button {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+    .upload-section button {
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    // ---------- BASIC DATA + TABLE/SEARCH LOADER ----------
+    // Guard pageData so script won't crash if not defined elsewhere
+    window.pageData = window.pageData || {};
+
+    // Seed this page's initial rows so dynamic rendering matches your static examples
+    // (Update or add more as needed)
+    window.pageData["1. law.html"] = [
+      {
+        id: "1",
+        title: "អនុក្រឹត្យលេខ ០១ អនក្រ.បក ស្តីពីការកែសម្រួល​និយាមកាដី...",
+        type: "",                                  // type optional; we show Title (Type)
+        date: "2020-01-10",                        // ISO date so formatter works nicely
+        khmer: "001.pdf"
+      },
+      {
+        id: "2",
+        title: "អនុក្រឹត្យលេខ ០១ អនក្រ.បក ស្តីពីការលើកទឹកចិត្តពន្ធដារក្នុងវិស័យមូលបត្រ",
+        type: "",
+        date: "2019-01-04",
+        khmer: "#"
+      }
+    ];
+
+    // Reuse your date formatter
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return isNaN(date) ? dateStr : date.toLocaleDateString(undefined, options);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const tableBody = document.querySelector("#lawTableBody");
+
+      if (!tableBody) {
+        console.error("Error: Table body (#lawTableBody) not found.");
+        return;
+      }
+
+      const searchFields = {
+        title: document.querySelector("#searchTitle"),
+        type: document.querySelector("#searchType"),
+        date: document.querySelector("#searchDate"),
+        khmer: document.querySelector("#searchKhmer")
+      };
+
+      // Merge static data + any previously uploaded files from localStorage
+      let allData = [];
+      const currentPage = getCurrentPage();
+      const staticPageData = Array.isArray(window.pageData[currentPage]) ? window.pageData[currentPage] : [];
+      allData.push(...staticPageData);
+
+      const uploaded = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
+      uploaded.forEach((file, index) => {
+        allData.push({
+          id: "U-" + (index + 1),
+          title: file.title,
+          type: file.category,
+          date: file.date,
+          khmer: file.khmerLink
+        });
+      });
+
+      function getCurrentPage() {
+        const path = window.location.pathname;
+        return path.substring(path.lastIndexOf("/") + 1) || "index.html";
+      }
+
+      function loadData(data) {
+        tableBody.innerHTML = "";
+
+        if (!Array.isArray(data) || data.length === 0) {
+          tableBody.innerHTML = "<tr><td colspan='4'>No data available</td></tr>";
+          return;
+        }
+
+        data.forEach(item => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+              <td>${item.id ?? ""}</td>
+              <td>${item.title}${item.type ? ` (${item.type})` : ""}</td>
+              <td>${formatDate(item.date ?? "")}</td>
+              <td>${item.khmer ? `<a href="${item.khmer}" target="_blank" download>Khmer</a>` : "-"}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+
+      function search() {
+        const titleQuery  = searchFields.title?.value.trim().toLowerCase() || "";
+        const typeQuery   = searchFields.type?.value.trim().toLowerCase() || "";
+        const dateQuery   = searchFields.date?.value.trim().toLowerCase() || "";
+        const khmerQuery  = searchFields.khmer?.value.trim().toLowerCase() || "";
+
+        const results = allData.filter(item => {
+          const title  = (item.title || "").toLowerCase();
+          const type   = (item.type  || "").toLowerCase();
+          const date   = (item.date  || "").toLowerCase();
+          const khmer  = (item.khmer || "").toLowerCase();
+
+          return (!titleQuery || title.includes(titleQuery)) &&
+                 (!typeQuery  || type.includes(typeQuery))   &&
+                 (!dateQuery  || date.includes(dateQuery))   &&
+                 (!khmerQuery || khmer.includes(khmerQuery));
+        });
+
+        loadData(results);
+      }
+
+      Object.values(searchFields).forEach(input => {
+        if (input) input.addEventListener("input", search);
+      });
+
+      loadData(allData);
+    });
+  </script>
+</head>
+<body>
+
+  <header>
+    ច្បាប់ (Laws)
+  </header>
+
+  <nav>
+    <a href="Index.html">Homepage</a>
+    <a href="#">About Us</a>
+    <a href="index.html">Official Documents</a>
+    <a href="#">Announcements</a>
+    <a href="#">Contact Us</a>
+  </nav>
+
+  <main>
+    <h2><center>បញ្ជីច្បាប់</center></h2>
+
+    <div class="pagination">
+      <a href="#">&lt;</a>
+      <a href="1. law.html">&laquo;</a>
+      <a href="1. law.html" class="active">1</a>
+      <a href="1.2law.html">2</a>
+      <a href="1.3law.html">3</a>
+      <a href="1.4law.html">4</a>
+      <a href="1.5law.html">5</a>
+      <a href="1.6law.html">6</a>
+      <a href="1.7law.html">7</a>
+      <a href="1.8law.html">8</a>
+      <a href="1.9law.html">9</a>
+      <a href="1.10law.html">10</a>
+      <a href="1.2law.html">&raquo;</a>
+      <a href="1.11law.html">&gt;</a>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <!-- Upload form row -->
+          <tr>
+            <th colspan="4">
+              <div class="upload-section">
+                <form id="uploadForm">
+                  <input type="text" id="docTitle" placeholder="Enter document title" required>
+                  <select id="docCategory" required>
+                    <option value="">-- Select Type --</option>
+                    <option value="Law">ច្បាប់</option>
+                    <option value="Amendment">វិសោធនកម្ម</option>
+                    <option value="Royal Decree">ព្រះរាជក្រឹត្យ</option>
+                    <option value="Sub-Decree">អនុក្រឹត្យ</option>
+                    <option value="Proclamation">ប្រកាស</option>
+                  </select>
+                  <input type="date" id="docDate" required>
+                  <input type="file" id="fileInput" required>
+                  <button type="submit">Upload</button>
+                </form>
+              </div>
+            </th>
+          </tr>
+          <!-- Search fields -->
+          <tr>
+            <th><input type="text" id="searchTitle" placeholder="Search by Title"></th>
+            <th><input type="text" id="searchType" placeholder="Search by Type"></th>
+            <th><input type="text" id="searchDate" placeholder="Search by Date"></th>
+            <th><input type="text" id="searchKhmer" placeholder="Search by Khmer Link"></th>
+          </tr>
+          <tr>
+            <th>ID</th>
+            <th>Title / Type</th>
+            <th>Date</th>
+            <th>Khmer</th>
+          </tr>
+        </thead>
+        <tbody id="lawTableBody">
+          <!-- Body is fully rendered by JS from pageData + localStorage -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    <div class="pagination">
+      <a href="#">&lt;</a>
+      <a href="#">&laquo;</a>
+      <a href="1. law.html" class="active">1</a>
+      <a href="1.2law.html">2</a>
+      <a href="1.3law.html">3</a>
+      <a href="1.4law.html">4</a>
+      <a href="1.5law.html">5</a>
+      <a href="1.6law.html">6</a>
+      <a href="1.7law.html">7</a>
+      <a href="1.8law.html">8</a>
+      <a href="1.9law.html">9</a>
+      <a href="1.10law.html">10</a>
+      <a href="1.2law.html">&raquo;</a>
+      <a href="1.11law.html">&gt;</a>
+    </div>
+    <p>&copy; 2025 Ministry of Interior.</p>
+  </footer>
+
+  <!-- ---------- Supabase Upload Script (module) ---------- -->
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+
+    // 1) Put your real project URL and anon key here
+    const supabaseUrl = "https://<your-project-ref>.supabase.co";
+    const supabaseKey = "<your-anon-key>";
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const form = document.getElementById("uploadForm");
+    const tableBody = document.getElementById("lawTableBody");
+
+    function saveUploadedFile({ title, category, date, url }) {
+      const uploaded = JSON.parse(localStorage.getItem("uploadedFiles") || "[]");
+      uploaded.push({
+        title,
+        category,
+        date,
+        khmerLink: url
+      });
+      localStorage.setItem("uploadedFiles", JSON.stringify(uploaded));
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("docTitle").value.trim();
+      const category = document.getElementById("docCategory").value;
+      const date = document.getElementById("docDate").value;
+      const file = document.getElementById("fileInput").files[0];
+
+      if (!title || !category || !date || !file) {
+        alert("❌ សូមបំពេញព័ត៌មានអោយពេញលេញ!");
+        return;
+      }
+
+      // 2) Unique path to avoid collisions
+      const ext = file.name.includes(".") ? file.name.split(".").pop() : "pdf";
+      const safeName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      const objectPath = `public/${safeName}`;
+
+      // 3) Upload
+      const { data: upData, error: upErr } = await supabase.storage
+        .from("uploads")
+        .upload(objectPath, file, { cacheControl: "3600", upsert: false });
+
+      if (upErr) {
+        console.error("Upload error:", upErr);
+        alert("❌ បញ្ចូលឯកសារបរាជ័យ: " + upErr.message);
+        return;
+      }
+
+      // 4) Get public URL
+      const { data: urlData, error: urlErr } = supabase.storage
+        .from("uploads")
+        .getPublicUrl(objectPath);
+
+      if (urlErr) {
+        console.error("Public URL error:", urlErr);
+        alert("❌ មិនអាចបង្កើតតំណភ្ជាប់សាធារណៈបានទេ: " + urlErr.message);
+        return;
+      }
+
+      const fileUrl = urlData.publicUrl;
+
+      // 5) Append new row (keeps numbering simple—uses current row count + 1)
+      const newRow = document.createElement("tr");
+
+      const idCell = document.createElement("td");
+      idCell.textContent = tableBody.rows.length + 1;
+
+      const titleCell = document.createElement("td");
+      titleCell.textContent = `${title}${category ? ` (${category})` : ""}`;
+
+      const dateCell = document.createElement("td");
+      dateCell.textContent = new Date(date).toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+
+      const linkCell = document.createElement("td");
+      const link = document.createElement("a");
+      link.href = fileUrl;
+      link.textContent = "Khmer";
+      link.target = "_blank";
+      link.setAttribute("download", "");
+      linkCell.appendChild(link);
+
+      newRow.appendChild(idCell);
+      newRow.appendChild(titleCell);
+      newRow.appendChild(dateCell);
+      newRow.appendChild(linkCell);
+      tableBody.appendChild(newRow);
+
+      // 6) Persist for reload + search
+      saveUploadedFile({ title, category, date, url: fileUrl });
+
+      alert("✅ បញ្ចូលឯកសារជោគជ័យ!");
+      form.reset();
+    });
+  </script>
+</body>
+</html>
